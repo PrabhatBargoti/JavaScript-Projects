@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Playwrite+NZ+Basic:wght@100..400&family=Pliant:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Manrope", sans-serif;
+}
+html,
+body{
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    color: #fff;
+}
+.header > h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 50px;
+}
+.board {
+    height: 540px;
+    width: 540px;
+    background-color: rgb(58, 57, 57);
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    border: 8px solid gray;
+    border-radius: 10px;
+}
+.chess-box {
+    height: 60px;
+    width: 60px;
+    border-radius: 5px;
+}
+.light {
+    background-color: #fff;
+}
+.dark {
+    background-color: #111;
+}
