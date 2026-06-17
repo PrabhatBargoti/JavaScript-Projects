@@ -6,6 +6,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Manrope", sans-serif;
+    user-select: none;
 }
 html,
 body{
@@ -26,23 +27,39 @@ body{
     margin: 20px 50px;
 }
 .board {
-    height: 540px;
-    width: 540px;
-    background-color: rgb(58, 57, 57);
-    display: flex;
+    height: 500px;
+    width: 500px;
+    background-color: rgba(20, 200, 20, 0.5);
+    display: grid;
     justify-self: center;
     align-self: center;
     border: 8px solid gray;
     border-radius: 10px;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    cursor: pointer;
 }
 .chess-box {
     height: 60px;
     width: 60px;
-    border-radius: 5px;
+}
+.active {
+    transform: scale(.95);
 }
 .light {
-    background-color: #fff;
+    background-color: #f0d9b5;
 }
 .dark {
-    background-color: #111;
+    background-color: #b58863;
+}
+.piece {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    text-shadow: 0 0 3px #000;
+}
+.selected{
+    background-color: rgba(20, 200, 20, 0.5) !important;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
 }
