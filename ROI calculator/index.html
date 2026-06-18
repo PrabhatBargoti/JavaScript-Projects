@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Automation ROI Calculator</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #3b82f6;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #334155;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        #results {
+            display: none;
+            margin-top: 2.5rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .metric-card {
+            background-color: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card h2 {
+            color: var(--success);
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .metric-card p {
+            margin: 0.5rem 0 0 0;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        pre {
+            background-color: var(--primary);
+            color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--secondary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Operations Drag & ROI Calculator</h1>
+        
+        <div class="input-grid">
+            <div class="form-group">
+                <label for="teamSize">Team Size (Employees)</label>
+                <input type="number" id="teamSize" placeholder="e.g., 50" min="1">
+            </div>
+            <div class="form-group">
+                <label for="hoursWasted">Manual Hours Wasted (Per Emp/Week)</label>
+                <input type="number" id="hoursWasted" placeholder="e.g., 10" min="0">
+            </div>
+            <div class="form-group">
+                <label for="hourlyWage">Average Hourly Wage ($)</label>
+                <input type="number" id="hourlyWage" placeholder="e.g., 35" min="0">
+            </div>
+        </div>
+
+        <button onclick="calculateROI()">Calculate 60% Automation Savings</button>
+
+        <div id="results">
+            <div class="metric-card">
+                <h2 id="savingsDisplay">$0</h2>
+                <p>Annual Capital Reclaimed via 60% Task Automation</p>
+            </div>
+
+            <label style="font-weight: 600; color: var(--primary);">Generated Strategy Payload (JSON):</label>
+            <pre><code id="jsonOutput"></code></pre>
+        </div>
+    </div>
+
+    <script>
+        function calculateROI() {
+            const teamSize = parseFloat(document.getElementById('teamSize').value);
+            const hoursWasted = parseFloat(document.getElementById('hoursWasted').value);
+            const hourlyWage = parseFloat(document.getElementById('hourlyWage').value);
+
+            if (!teamSize || !hoursWasted || !hourlyWage) {
+                alert("Please fill in all data fields to calculate operational drag.");
+                return;
+            }
+
+            const weeklyWastedHoursTotal = teamSize * hoursWasted;
+            const automatedHoursWeekly = weeklyWastedHoursTotal * 0.60;
+            const annualSavings = automatedHoursWeekly * hourlyWage * 52;
+
+            const formattedSavings = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(annualSavings);
+
+            document.getElementById('savingsDisplay').textContent = formattedSavings;
+
+            const strategyJSON = {
+                "executive_summary": `Manual repetitive tasks are creating a massive hidden operational drag, costing your organization approximately ${formattedSavings} annually in lost billable time. By implementing targeted AI agents to achieve a 60% task automation rate, your organization can instantly reclaim these resources and transform costly overhead into measurable bottom-line savings.`,
+                "top_three_bottlenecks": [
+                    "Manual data entry and cross-platform synchronization between CRM systems and legacy databases.",
+                    "Repetitive invoice processing, receipt matching, and routine financial reconciliations.",
+                    "High-volume, low-complexity internal IT and customer support ticketing and triaging."
+                ],
+                "recommended_agents": [
+                    {
+                        "name": "Autonomous Invoicing & Reconciliation Agent",
+                        "impact": "High",
+                        "time_to_deploy": "2-3 Weeks"
+                    },
+                    {
+                        "name": "Intelligent Support Triage Bot",
+                        "impact": "Medium",
+                        "time_to_deploy": "1-2 Weeks"
+                    }
+                ],
+                "phases": [
+                    {
+                        "phase": "1",
+                        "action": "Immediate data audit and pipeline setup."
+                    },
+                    {
+                        "phase": "2",
+                        "action": "Agent deployment and prompt engineering refinement."
+                    }
+                ]
+            };
+
+            document.getElementById('jsonOutput').textContent = JSON.stringify(strategyJSON, null, 2);
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
