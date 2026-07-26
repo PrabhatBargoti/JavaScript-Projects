@@ -4,8 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple weight converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to left top, yellow, lightblue, yellow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: darkcyan;
+        }
+
+        .container {
+            background: rgba(255, 255, 255,0.3);
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 5%;
+        }
+        
+        .pound {
+            border: none;
+            padding: 5px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .submit {
+            background-color: darkblue;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5%;
+            width: 25vw;
+        }
+
+        .error {
+            color: red
+        }
+
+        .block {
+            display: none;
+        }
+
+        .weight {
+            border: none;
+            padding: 5px;
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1 class="title">Weight Converter</h1>
+        <br>
+        <div class="pound-container">
+            <label for="pound-input">Weight in Pound</label>
+            <input type="text" class="pound" id="pound">
+        </div>
+        <br>
+        <div class="btn-container">
+            <button class="submit">Submit</button>
+        </div>
+        <br>
+        <label for="Weight-input">Weight in Kg's:</label>
+        <input type="text" class="weight" id="weight" disabled>
+        <br>
+        <h4 class="error block">Please Enter a Vaild Number!!</h4>
+    </div>
+
+    <script>
+         const PoundInt = document.querySelector('.pound');
+    const WeightInt = document.querySelector('.weight');
+    const ErrorTex = document.querySelector('.error');
+    const SubmitBtn = document.querySelector('.submit');
+
+    const PoundVal = 0.4535924;
+
+    function Submit() {
+        const PoundDig = Number(PoundInt.value);
+
+        if (PoundDig <= 0 || isNaN(PoundDig)) {
+            ErrorTex.classList.remove("block");
+            WeightInt.value = "";
+            return;
+        }
+
+        ErrorTex.classList.add("block");
+
+        const res = (PoundDig * PoundVal).toFixed(2);
+
+        WeightInt.value = res;
+    }
+
+    SubmitBtn.addEventListener("click", Submit);
+    </script>
 </body>
 </html>
